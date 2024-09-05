@@ -818,6 +818,7 @@ void __gb_write(struct gb_s *gb, const uint_fast16_t addr, const uint8_t val)
 	case 0x8:
 	case 0x9:
 		gb->vram[addr - VRAM_ADDR] = val;
+		GKLog("WRITING TO VRAM 0x%04X 0x%02X", addr - VRAM_ADDR, val);
 		return;
 
 	case 0xA:
@@ -983,7 +984,8 @@ void __gb_write(struct gb_s *gb, const uint_fast16_t addr, const uint8_t val)
 		/* DMA Register */
 		case 0x46:
 			gb->gb_reg.DMA = (val % 0xF1);
-
+			GKLog("RUNNING DMA TRANSFER");
+			
 			for(uint8_t i = 0; i < OAM_SIZE; i++)
 				gb->oam[i] = __gb_read(gb, (gb->gb_reg.DMA << 8) + i);
 

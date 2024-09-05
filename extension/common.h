@@ -8,6 +8,8 @@
 #include "pd_api.h"
 #include "app.h"
 
+#define GAMEBOY_ENABLED 1
+
 //#define GK_FORCEINLINE inline __attribute__((always_inline))
 #define GK_FORCEINLINE __attribute__((always_inline)) inline
 

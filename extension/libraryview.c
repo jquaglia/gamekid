@@ -80,11 +80,11 @@ void listFilesCallback(const char* filename, void* context) {
 	if(filename[0] == '.') {
 		return;
 	}
-	
+  
 	int filename_length = strlen(filename);
 	const char* file_extension = strrchr(filename, '.');
 	bool file_allowed = false;
-	
+  
 	if(file_extension != NULL && file_extension != filename) {
 #if GAMEBOY_ENABLED
 		// Allow Game Boy files.
@@ -122,7 +122,7 @@ void GKLibraryViewShow(GKLibraryView* view) {
 		view->sound_menu = playdate->system->addCheckmarkMenuItem("Sound", GKAppGetSoundEnabled(), menu_item_sound, view);
 	}
 	
-	playdate->file->listfiles("/games", listFilesCallback, view);
+	playdate->file->listfiles("/games", listFilesCallback, view, false);
 }
 
 void GKLibraryViewHide(GKLibraryView* view) {

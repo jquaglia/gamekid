@@ -16,7 +16,6 @@
 typedef struct _GKGameBoyAdapter {
 	struct gb_s gb;
 	
-	uint32_t* current_frame;
 	uint8_t* rom; // Memory for ROM file.
 	uint8_t* cart_ram; // Memory for save file.
 	char* save_file_name;
@@ -42,6 +41,7 @@ static void save(GKGameBoyAdapter* adapter);
 static void load_save(const char* save_file_name, uint8_t** dest, const size_t len);
 static uint8_t read_rom_byte(struct gb_s* gb, const uint_fast32_t addr);
 static uint8_t read_ram_byte(struct gb_s* gb, const uint_fast32_t addr);
+static void update_oam(struct gb_s* gb);
 static void write_ram_byte(struct gb_s* gb, const uint_fast32_t addr, const uint8_t val);
 static void error(struct gb_s* gb, const enum gb_error_e gb_err, const uint16_t val);
 static void update_display_natural(GKGameBoyAdapter* adapter);
@@ -171,7 +171,6 @@ void GKGameBoyAdapterUpdate(GKGameBoyAdapter* adapter, unsigned int dt) {
 	}
 	
 	playdate->graphics->setDrawMode(kDrawModeCopy);
-	adapter->current_frame = (uint32_t*)playdate->graphics->getFrame();
 	
 	update_joypad(adapter);
 	update_crank(adapter);
@@ -451,7 +450,7 @@ static void update_display_natural(GKGameBoyAdapter* adapter) {
 			continue;
 		}
 		
-		frame = adapter->current_frame + (((LCD_ROWSIZE / 4) * (start_y + line))) + 3;
+		frame = display_frame + (((LCD_ROWSIZE / 4) * (start_y + line))) + 3;
 		const uint8_t* const pixels = !adapter->gb.display.back_fb_enabled ? adapter->gb.display.back_fb[line] : adapter->gb.display.front_fb[line];
 	
 		uint32_t accumulator = 0x00000000;

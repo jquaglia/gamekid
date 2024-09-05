@@ -50,13 +50,16 @@ void ListDestroyAll(List* list) {
 	free(list);
 }
 
-void ListAppend(List* list, void* data) {
+int ListAppend(List* list, void* data) {
 	ListNode* node = list->first;
+	int index = 0;
 	while(node->next != NULL) {
 		node = node->next;
+		index++;
 	}
 	node->data = data;
 	node->next = ListNodeCreate();
+	return index;
 }
 
 void ListInsert(List* list, int index, void* data) {
