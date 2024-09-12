@@ -31,7 +31,7 @@ UINCDIR = extension extension/lib extension/emulator extension/emulator/gb
 UASRC = 
 
 # List all user C define here, like -D_DEBUG=1
-UDEFS = 
+UDEFS = -DGAMEBOY_ENABLED -DNDEBUG
 
 # Define ASM defines here
 UADEFS = 

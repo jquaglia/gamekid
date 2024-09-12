@@ -19,7 +19,7 @@ typedef struct _List {
 List* ListCreate(void);
 void ListDestroy(List* list);
 void ListDestroyAll(List* list);
-void ListAppend(List* list, void* data);
+int ListAppend(List* list, void* data);
 void ListInsert(List* list, int index, void* data);
 void* ListGet(List* list, int index);
 void* ListRemove(List* list, int index);
